@@ -1,0 +1,7 @@
+/.idea
+/.vscode
+/venv
+*.pyc
+*.pyo
+*/__pycache__
+*.sqlite3
