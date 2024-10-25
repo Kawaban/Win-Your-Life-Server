@@ -21,12 +21,10 @@ class UserProfileSerializer(serializers.Serializer):
 
 
 class UserInfoChangeNameSerializer(serializers.Serializer):
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    name = serializers.CharField(required=True)
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get("first_name", instance.first_name)
-        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.name = validated_data.get("name", instance.name)
         instance.save()
         return instance
 
@@ -41,13 +39,11 @@ class UserInfoAddStreakSerializer(serializers.Serializer):
 
 
 class UserInfoSerializer(serializers.Serializer):
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    name = serializers.CharField(required=True)
 
     def to_representation(self, instance):
         return {
-            "first_name": instance.first_name,
-            "last_name": instance.last_name,
+            "name": instance.name,
             "streak": instance.streak,
         }
 
@@ -58,11 +54,14 @@ class UserSerializer(serializers.Serializer):
     friends = serializers.ListField(child=serializers.EmailField())
 
     def to_representation(self, instance):
+        # return {
+        #     "email": instance.email,
+        #     "user_profile": UserProfileSerializer(instance.user_profile).data,
+        #     "user_info": UserInfoSerializer(instance.user_info).data,
+        #     "friends": [friend.email for friend in instance.friends.all()],
+        # }
         return {
-            "email": instance.email,
-            "user_profile": UserProfileSerializer(instance.user_profile).data,
-            "user_info": UserInfoSerializer(instance.user_info).data,
-            "friends": [friend.email for friend in instance.friends.all()],
+            "name" : instance.user_info.name
         }
 
 

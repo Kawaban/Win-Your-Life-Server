@@ -12,8 +12,7 @@ class UserProfile(BaseModel):
 
 
 class UserInfo(BaseModel):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     streak = models.IntegerField(default=0)
 
 
