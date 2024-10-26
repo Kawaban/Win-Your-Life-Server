@@ -98,8 +98,7 @@ class Command(BaseCommand):
 
             # Create UserInfo
             user_info = UserInfo.objects.create(
-                first_name=faker.first_name(),
-                last_name=faker.last_name(),
+                name=faker.first_name(),
                 streak=random.randint(0, 100)
             )
 

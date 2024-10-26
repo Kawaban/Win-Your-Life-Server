@@ -114,7 +114,7 @@ class UserView(APIView):
     )
     def get(self, request):
         user = UserService().get_user_by_email(request.user.email)
-        return Response({"content": UserSerializer(user).data})
+        return Response(UserSerializer(user).data)
 
     @extend_schema(
         summary="Change user email",
