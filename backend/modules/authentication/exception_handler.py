@@ -13,6 +13,7 @@ def custom_exception_handler(exc, context):
             "IntegrityError": _handler_validation_error,
             'InvalidToken': _handler_permission_denied,
             'ActivationTokenExpiredException': _handler_token_expired,
+            'AuthenticationFailed': _handler_bad_credentials,
             # Add more handlers as needed
         }
         res = exception_handler(exc, context)
@@ -42,7 +43,7 @@ def _handler_integrity_error(exc, context, res):
 
 
 def _handler_bad_credentials(exc, context, res):
-    return exc.detail, 400
+    return "User account isnt active or doesnt exist", 400
 
 
 def _handler_permission_denied(exc, context, res):
