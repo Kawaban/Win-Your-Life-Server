@@ -9,12 +9,12 @@ class UserService:
     def get_user_by_email(self, email):
         return User.objects.get(email=email)
 
-    def create_user(self, email):
+    def create_user(self, email, nickname):
         return User.objects.create(
             id=uuid.uuid4(),
             email=email,
             user_profile=UserProfile.objects.create(id=uuid.uuid4()),
-            user_info=UserInfo.objects.create(id=uuid.uuid4()),
+            user_info=UserInfo.objects.create(id=uuid.uuid4(), name=nickname),
         )
 
     def add_friend(self, user, data):

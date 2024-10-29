@@ -56,7 +56,7 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         auth_user = serializer.create(serializer.validated_data)
-        UserService().create_user(serializer.data["email"])
+        UserService().create_user(serializer.data["email"], serializer.data["nickname"])
 
         email = serializer.data["email"]
 
