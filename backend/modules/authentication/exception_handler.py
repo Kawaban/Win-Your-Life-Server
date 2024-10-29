@@ -7,6 +7,9 @@ def custom_exception_handler(exc, context):
     try:
         exception_class = exc.__class__.__name__
         print(exception_class)
+        print(exc.detail)
+        print(exc)
+        print(context)
         handlers = {
             "BadCredentialsException": _handler_bad_credentials,
             "ValidationError": _handler_validation_error,

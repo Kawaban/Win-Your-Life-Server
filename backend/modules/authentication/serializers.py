@@ -6,14 +6,10 @@ from modules.authentication.models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
     email = serializers.EmailField(required=True)
     nickname = serializers.CharField(required=True)
-
-    class Meta:
-        model = CustomUser
-        fields = ("email", "password")
 
     def create(self, validated_data):
         user = CustomUser.objects.create(email=validated_data["email"])

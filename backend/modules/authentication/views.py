@@ -53,6 +53,7 @@ class RegisterView(APIView):
         responses={200: str},  # Define response type
     )
     def post(self, request):
+        print(request.data)
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         auth_user = serializer.create(serializer.validated_data)
