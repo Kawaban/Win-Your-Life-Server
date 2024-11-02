@@ -1,16 +1,18 @@
 package com.example.winyourlife.userinfo.domain;
 
 import com.example.winyourlife.infrastructure.model.AbstractEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Lob;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.LazyGroup;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
+import java.sql.Blob;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -24,8 +26,7 @@ public class UserInfo extends AbstractEntity {
     @Column(nullable = false)
     private String name;
 
-    @Lob
-    @Column(columnDefinition = "BYTEA")
+    @Column(columnDefinition="bytea")
     private byte[] avatar;
 
     private int streak;
@@ -52,7 +53,6 @@ public class UserInfo extends AbstractEntity {
             UUID userId,
             String name,
             String email,
-            byte[] avatar,
             int streak,
             int longestStreak,
             int completedTasks,
@@ -61,7 +61,7 @@ public class UserInfo extends AbstractEntity {
         super(uuid, version, createdDate, lastModifiedDate);
         this.name = name;
         this.email = email;
-        this.avatar = avatar;
+        this.avatar = new byte[0];
         this.streak = streak;
         this.longestStreak = longestStreak;
         this.completedTasks = completedTasks;

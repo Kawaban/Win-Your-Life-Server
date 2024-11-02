@@ -22,6 +22,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .build();
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiErrorWrapper(apiError));
     }
 
@@ -70,6 +71,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .message("Entity not found")
                 .status(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .build();
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiErrorWrapper(apiError));
     }
 

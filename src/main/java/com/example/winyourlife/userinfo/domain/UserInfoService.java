@@ -8,11 +8,15 @@ import com.example.winyourlife.userinfo.dto.UserInfoUpdateSettings;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public record UserInfoService(UserInfoRepository userInfoRepository, UserInfoMapper userInfoMapper) implements com.example.winyourlife.userinfo.UserInfoService {
     @Override
     public void createUserInfo(UserInfoRequest userInfoRequest) {
         val userInfo = userInfoMapper.userInfoRequestToUserInfo(userInfoRequest);
+        System.out.println(userInfo.getAvatar());
+        System.out.println(userInfo.getEmail());
         userInfoRepository.save(userInfo);
     }
 

@@ -1,6 +1,7 @@
 package com.example.winyourlife.authentication.user.domain;
 
 import com.example.winyourlife.authentication.user.dto.UserRequest;
+import com.example.winyourlife.infrastructure.exception.ApplicationEntityNotFoundException;
 import com.example.winyourlife.infrastructure.exception.UserAlreadyExistsException;
 import lombok.val;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +21,8 @@ record UserService(UserRepository userRepository, UserMapper userMapper) impleme
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public UserDetails loadUserByUsername(String email) throws ApplicationEntityNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(ApplicationEntityNotFoundException::new);
     }
 
     @Override

@@ -29,8 +29,8 @@ CREATE TABLE winyourlife.users_info
     streak           INT        ,
     longest_streak           INT        ,
     completed_tasks           INT        ,
-    avatar           BYTEA        ,
-    is_friends_notification_active           BOOLEAN  NOT NULL      ,
+    avatar           bytea        ,
+    is_friend_notification_active           BOOLEAN  NOT NULL      ,
     is_daily_reminder_active           BOOLEAN   NOT NULL      ,
 
     PRIMARY KEY (uuid)

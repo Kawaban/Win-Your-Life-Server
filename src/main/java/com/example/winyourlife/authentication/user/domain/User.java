@@ -47,7 +47,7 @@ class User extends AbstractEntity implements UserDetails {
         this.password = password;
         this.email = email;
         this.role = role;
-        this.isEnabled = isEnabled;
+        this.isEnabled = true;
     }
 
     @Override
