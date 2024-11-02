@@ -1,0 +1,31 @@
+package com.example.winyourlife.authentication.user.domain;
+
+import com.example.winyourlife.authentication.user.dto.UserRequest;
+import com.example.winyourlife.infrastructure.exception.UserAlreadyExistsException;
+import lombok.val;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+record UserService(UserRepository userRepository, UserMapper userMapper) implements com.example.winyourlife.authentication.user.UserService {
+    @Override
+    public void createUser(UserRequest userRequest) {
+        if (existsByEmail(userRequest.email())) {
+            throw new UserAlreadyExistsException();
+        }
+        val user = userMapper.userRequestToUser(userRequest);
+        user.setRole(Role.USER);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+}
