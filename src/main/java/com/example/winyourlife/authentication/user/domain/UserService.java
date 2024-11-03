@@ -29,4 +29,12 @@ record UserService(UserRepository userRepository, UserMapper userMapper) impleme
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public void changeEmail(String oldEmail, String newEmail) {
+        val user = userRepository.findByEmail(oldEmail)
+                .orElseThrow(ApplicationEntityNotFoundException::new);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
 }

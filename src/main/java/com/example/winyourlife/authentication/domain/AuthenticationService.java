@@ -26,14 +26,16 @@ public record AuthenticationService(
 
     @Override
     public void register(RegisterRequest registerRequest) {
+        System.out.println(registerRequest.email());
+        System.out.println(registerRequest.name());
         val userRequest = UserRequest.builder()
                 .email(registerRequest.email())
                 .password(passwordEncoder.encode(new String(registerRequest.password())).toCharArray())
                 .build();
         userService.createUser(userRequest);
 
-        registerRequest.zeroPassword();
-        userRequest.zeroPassword();
+        System.out.println(registerRequest.email());
+        System.out.println(registerRequest.name());
 
         val userInfoRequest = com.example.winyourlife.userinfo.dto.UserInfoRequest.builder()
                 .email(registerRequest.email())
@@ -41,7 +43,8 @@ public record AuthenticationService(
                 .build();
         userInfoService.createUserInfo(userInfoRequest);
 
-
+        registerRequest.zeroPassword();
+        userRequest.zeroPassword();
     }
 
     @Override

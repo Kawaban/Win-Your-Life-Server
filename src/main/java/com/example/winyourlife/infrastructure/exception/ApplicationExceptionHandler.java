@@ -36,6 +36,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .message(uri.equals("/login") ? "Wrong password or email" : ex.getMessage())
                 .status(HttpStatus.FORBIDDEN.getReasonPhrase())
                 .build();
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiErrorWrapper(apiError));
     }
 
@@ -49,6 +50,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .message(uri.equals("/register") ? "Data missing" : ex.getMessage())
                 .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 .build();
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorWrapper(apiError));
     }
 
@@ -60,6 +62,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .message("Email already used")
                 .status(HttpStatus.CONFLICT.getReasonPhrase())
                 .build();
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiErrorWrapper(apiError));
     }
 
@@ -71,7 +74,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .message("Entity not found")
                 .status(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .build();
-
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiErrorWrapper(apiError));
     }
 

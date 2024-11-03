@@ -2,7 +2,8 @@ package com.example.winyourlife.userinfo.domain;
 
 import com.example.winyourlife.userinfo.UserInfoService;
 import com.example.winyourlife.userinfo.dto.UserInfoResponse;
-import com.example.winyourlife.userinfo.dto.UserInfoUpdateData;
+import com.example.winyourlife.userinfo.dto.UserInfoUpdateDataRequest;
+import com.example.winyourlife.userinfo.dto.UserInfoUpdateDataResponse;
 import com.example.winyourlife.userinfo.dto.UserInfoUpdateSettings;
 import lombok.val;
 import org.springframework.security.core.Authentication;
@@ -18,17 +19,20 @@ public record UserInfoController(UserInfoService userInfoService) {
     UserInfoResponse getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
-        System.out.println(user.getUsername());
         return userInfoService.getUserInfo(user.getUsername());
     }
 
-    @PatchMapping("/data/{email}")
-    void updateUserInfoData(@PathVariable String email, @RequestBody UserInfoUpdateData userInfoUpdateData) {
-        userInfoService.updateUserInfoData(email, userInfoUpdateData);
+    @PatchMapping("/data")
+    UserInfoUpdateDataResponse updateUserInfoData(@RequestBody UserInfoUpdateDataRequest userInfoUpdateDataRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+        return userInfoService.updateUserInfoData(user.getUsername(), userInfoUpdateDataRequest);
     }
 
-    @PatchMapping("/settings/{email}")
-    void updateUserInfoSettings(@PathVariable String email, @RequestBody UserInfoUpdateSettings userInfoUpdateSettings) {
-        userInfoService.updateUserInfoSettings(email, userInfoUpdateSettings);
+    @PatchMapping("/settings")
+    void updateUserInfoSettings(@RequestBody UserInfoUpdateSettings userInfoUpdateSettings) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+        userInfoService.updateUserInfoSettings(user.getUsername(), userInfoUpdateSettings);
     }
 }
