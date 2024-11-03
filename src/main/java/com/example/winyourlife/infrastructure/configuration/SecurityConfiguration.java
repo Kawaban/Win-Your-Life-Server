@@ -65,4 +65,3 @@ class SecurityConfiguration {
         return config.getAuthenticationManager();
     }
 }
-

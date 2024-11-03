@@ -20,9 +20,8 @@ public record AuthenticationService(
         UserService userService,
         UserInfoService userInfoService,
         JwtService jwtService,
-        AuthenticationManager authenticationManager
-) implements com.example.winyourlife.authentication.AuthenticationService {
-
+        AuthenticationManager authenticationManager)
+        implements com.example.winyourlife.authentication.AuthenticationService {
 
     @Override
     public void register(RegisterRequest registerRequest) {
@@ -30,7 +29,9 @@ public record AuthenticationService(
         System.out.println(registerRequest.name());
         val userRequest = UserRequest.builder()
                 .email(registerRequest.email())
-                .password(passwordEncoder.encode(new String(registerRequest.password())).toCharArray())
+                .password(passwordEncoder
+                        .encode(new String(registerRequest.password()))
+                        .toCharArray())
                 .build();
         userService.createUser(userRequest);
 

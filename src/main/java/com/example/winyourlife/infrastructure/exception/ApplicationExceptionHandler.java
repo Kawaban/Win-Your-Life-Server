@@ -67,7 +67,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(ApplicationEntityNotFoundException.class)
-    public ResponseEntity<ApiErrorWrapper> handleEntityNotFound(ApplicationEntityNotFoundException ex, WebRequest request) {
+    public ResponseEntity<ApiErrorWrapper> handleEntityNotFound(
+            ApplicationEntityNotFoundException ex, WebRequest request) {
         final ApiError apiError = ApiError.builder()
                 .path(extractRequestUri(request))
                 .statusCode(HttpStatus.NOT_FOUND.value())

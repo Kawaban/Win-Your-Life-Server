@@ -2,17 +2,16 @@ package com.example.winyourlife.authentication.user.domain;
 
 import com.example.winyourlife.infrastructure.model.AbstractEntity;
 import jakarta.persistence.*;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -65,12 +64,10 @@ class User extends AbstractEntity implements UserDetails {
         return new String(password);
     }
 
-
     @Override
     public boolean isAccountNonLocked() {
         return isEnabled;
     }
-
 
     @Override
     public boolean isEnabled() {

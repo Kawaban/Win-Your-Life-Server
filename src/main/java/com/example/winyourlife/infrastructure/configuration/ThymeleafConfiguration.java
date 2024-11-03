@@ -1,5 +1,6 @@
 package com.example.winyourlife.infrastructure.configuration;
 
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -8,8 +9,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-
-import java.util.Collections;
 
 @Configuration
 class ThymeleafConfiguration {

@@ -3,18 +3,12 @@ package com.example.winyourlife.userinfo.domain;
 import com.example.winyourlife.infrastructure.model.AbstractEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import java.time.Instant;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.LazyGroup;
-import org.hibernate.annotations.Type;
-import org.hibernate.type.SqlTypes;
-
-import java.sql.Blob;
-import java.time.Instant;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -26,7 +20,7 @@ public class UserInfo extends AbstractEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition="bytea")
+    @Column(columnDefinition = "bytea")
     private byte[] avatar;
 
     private int streak;
@@ -42,7 +36,6 @@ public class UserInfo extends AbstractEntity {
     @Email
     @Column(nullable = false, unique = true)
     private String email;
-
 
     @Builder
     public UserInfo(

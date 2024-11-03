@@ -22,5 +22,4 @@ record AuthenticationController(AuthenticationService authenticationService) {
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         return authenticationService.login(loginRequest);
     }
-
 }

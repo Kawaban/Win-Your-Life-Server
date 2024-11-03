@@ -5,11 +5,11 @@ import com.example.winyourlife.infrastructure.exception.ApplicationEntityNotFoun
 import com.example.winyourlife.infrastructure.exception.UserAlreadyExistsException;
 import lombok.val;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-record UserService(UserRepository userRepository, UserMapper userMapper) implements com.example.winyourlife.authentication.user.UserService {
+record UserService(UserRepository userRepository, UserMapper userMapper)
+        implements com.example.winyourlife.authentication.user.UserService {
     @Override
     public void createUser(UserRequest userRequest) {
         if (existsByEmail(userRequest.email())) {
@@ -32,8 +32,7 @@ record UserService(UserRepository userRepository, UserMapper userMapper) impleme
 
     @Override
     public void changeEmail(String oldEmail, String newEmail) {
-        val user = userRepository.findByEmail(oldEmail)
-                .orElseThrow(ApplicationEntityNotFoundException::new);
+        val user = userRepository.findByEmail(oldEmail).orElseThrow(ApplicationEntityNotFoundException::new);
         user.setEmail(newEmail);
         userRepository.save(user);
     }

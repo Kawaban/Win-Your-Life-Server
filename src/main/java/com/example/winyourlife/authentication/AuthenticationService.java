@@ -6,5 +6,6 @@ import com.example.winyourlife.authentication.dto.RegisterRequest;
 
 public interface AuthenticationService {
     void register(RegisterRequest registerRequest);
+
     LoginResponse login(LoginRequest loginRequest);
 }
