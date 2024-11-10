@@ -4,6 +4,7 @@ import com.example.winyourlife.infrastructure.model.AbstractEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
@@ -27,15 +28,16 @@ public class UserInfo extends AbstractEntity {
     private int longestStreak;
     private int completedTasks;
 
-    @Column(nullable = false)
-    private boolean isFriendNotificationActive = true;
-
-    @Column(nullable = false)
-    private boolean isDailyReminderActive = true;
-
     @Email
     @Column(nullable = false, unique = true)
     private String email;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private List<UserInfo> friends;
 
     @Builder
     public UserInfo(
@@ -43,14 +45,11 @@ public class UserInfo extends AbstractEntity {
             Long version,
             Instant createdDate,
             Instant lastModifiedDate,
-            UUID userId,
             String name,
             String email,
             int streak,
             int longestStreak,
-            int completedTasks,
-            boolean isFriendNotificationActive,
-            boolean isDailyReminderActive) {
+            int completedTasks) {
         super(uuid, version, createdDate, lastModifiedDate);
         this.name = name;
         this.email = email;
@@ -58,7 +57,5 @@ public class UserInfo extends AbstractEntity {
         this.streak = streak;
         this.longestStreak = longestStreak;
         this.completedTasks = completedTasks;
-        this.isFriendNotificationActive = isFriendNotificationActive;
-        this.isDailyReminderActive = isDailyReminderActive;
     }
 }

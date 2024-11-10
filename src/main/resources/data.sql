@@ -76,9 +76,7 @@ INSERT
             streak,
             longest_streak,
             completed_tasks,
-            avatar,
-            is_friend_notification_active,
-            is_daily_reminder_active
+            avatar
         )
     VALUES(
         NOW(),
@@ -90,9 +88,7 @@ INSERT
         5,
         10,
         50,
-        E'\\x',
-        TRUE,
-        TRUE
+        E'\\x'
     ),
     (
         NOW(),
@@ -104,9 +100,7 @@ INSERT
         3,
         5,
         30,
-        E'\\x',
-        FALSE,
-        TRUE
+        E'\\x'
     ),
     (
         NOW(),
@@ -118,9 +112,7 @@ INSERT
         7,
         12,
         70,
-        E'\\x',
-        TRUE,
-        FALSE
+        E'\\x'
     ),
     (
         NOW(),
@@ -132,9 +124,7 @@ INSERT
         2,
         4,
         15,
-        E'\\x',
-        FALSE,
-        FALSE
+        E'\\x'
     ),
     (
         NOW(),
@@ -146,7 +136,5 @@ INSERT
         6,
         9,
         60,
-        E'\\x',
-        TRUE,
-        TRUE
+        E'\\x'
     );

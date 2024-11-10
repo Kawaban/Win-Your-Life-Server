@@ -1,13 +1,16 @@
 package com.example.winyourlife.userinfo;
 
+import com.example.winyourlife.userinfo.domain.UserInfo;
 import com.example.winyourlife.userinfo.dto.*;
 
 public interface UserInfoService {
     void createUserInfo(UserInfoRequest userInfoRequest);
 
-    UserInfoResponse getUserInfo(String email);
+    UserInfoResponse getUserInfo();
 
-    UserInfoUpdateDataResponse updateUserInfoData(String email, UserInfoUpdateDataRequest userInfoUpdateDataRequest);
+    UserInfoUpdateDataResponse updateUserInfoData(UserInfoUpdateDataRequest userInfoUpdateDataRequest);
 
-    void updateUserInfoSettings(String email, UserInfoUpdateSettings userInfoUpdateSettings);
+    void addFriend(UserInfo sender, UserInfo recipient);
+
+    UserInfo getUserInfoByEmail(String email);
 }

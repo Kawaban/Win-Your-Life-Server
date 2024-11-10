@@ -39,7 +39,59 @@ CREATE
             longest_streak INT,
             completed_tasks INT,
             avatar bytea,
-            is_friend_notification_active BOOLEAN NOT NULL,
-            is_daily_reminder_active BOOLEAN NOT NULL,
+            PRIMARY KEY(uuid)
+        );
+
+DROP
+    TABLE
+        IF EXISTS winyourlife.notifications;
+
+CREATE
+    TABLE
+        winyourlife.notifications(
+            created_date TIMESTAMP(6) WITH TIME ZONE,
+            last_modified_date TIMESTAMP(6) WITH TIME ZONE,
+            version BIGINT NOT NULL DEFAULT 0,
+            uuid UUID NOT NULL,
+            TYPE VARCHAR(255) NOT NULL,
+            email_sender VARCHAR(255) NOT NULL,
+            email_recipient VARCHAR(255) NOT NULL,
+            is_read BOOLEAN DEFAULT FALSE NOT NULL,
+            PRIMARY KEY(uuid)
+        );
+
+DROP
+    TABLE
+        IF EXISTS winyourlife.friend_requests;
+
+CREATE
+    TABLE
+        winyourlife.friend_requests(
+            created_date TIMESTAMP(6) WITH TIME ZONE,
+            last_modified_date TIMESTAMP(6) WITH TIME ZONE,
+            version BIGINT NOT NULL DEFAULT 0,
+            uuid UUID NOT NULL,
+            sender UUID NOT NULL,
+            recipient UUID NOT NULL,
+            FOREIGN KEY(sender) REFERENCES winyourlife.users_info(uuid),
+            FOREIGN KEY(recipient) REFERENCES winyourlife.users_info(uuid),
+            PRIMARY KEY(uuid)
+        );
+
+DROP
+    TABLE
+        IF EXISTS winyourlife.friends;
+
+CREATE
+    TABLE
+        winyourlife.friends(
+            created_date TIMESTAMP(6) WITH TIME ZONE,
+            last_modified_date TIMESTAMP(6) WITH TIME ZONE,
+            version BIGINT NOT NULL DEFAULT 0,
+            uuid UUID NOT NULL,
+            user_id UUID NOT NULL,
+            friend_id UUID NOT NULL,
+            FOREIGN KEY(user1) REFERENCES winyourlife.users_info(uuid),
+            FOREIGN KEY(user2) REFERENCES winyourlife.users_info(uuid),
             PRIMARY KEY(uuid)
         );
