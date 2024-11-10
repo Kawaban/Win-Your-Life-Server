@@ -9,20 +9,20 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/friend-request")
+@RequestMapping("/api")
 public record NotificationController(NotificationService notificationService) {
 
-    @PostMapping("/send")
+    @PostMapping("/friend-request/send")
     void addFriendRequest(@Valid @RequestBody FriendRequestCreate friendRequest) {
         notificationService.addFriendRequest(friendRequest);
     }
 
-    @PostMapping("/accept")
+    @PostMapping("/friend-request/accept")
     void acceptFriendRequest(@Valid @RequestBody FriendRequestResponse friendRequestId) {
         notificationService.acceptFriendRequest(friendRequestId);
     }
 
-    @PostMapping("/decline")
+    @PostMapping("/friend-request/decline")
     void declineFriendRequest(@Valid @RequestBody FriendRequestResponse friendRequestId) {
         notificationService.declineFriendRequest(friendRequestId);
     }

@@ -74,7 +74,13 @@ record NotificationService(
                 .filter(notification ->
                         !notification.isRead() || notification.getType() == NotificationType.FRIEND_REQUEST)
                 .map(notification -> new NotificationResponse(
-                        notification.getType().name(), notification.getEmailSender(), notification.getUuid()))
+                        notification.getType().name(),
+                        notification.getEmailSender(),
+                        notification.getUuid(),
+                        userInfoService
+                                .getUserInfoByEmail(notification.getEmailSender())
+                                .getName(),
+                        notification.getCreatedDate().toString()))
                 .toList();
         notifications.forEach(notification -> notification.setRead(true));
         return result;
