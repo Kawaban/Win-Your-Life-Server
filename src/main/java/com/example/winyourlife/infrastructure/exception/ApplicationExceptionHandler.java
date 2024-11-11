@@ -79,6 +79,18 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiErrorWrapper(apiError));
     }
 
+    @ExceptionHandler(BadInputException.class)
+    public ResponseEntity<ApiErrorWrapper> handleBadInput(BadInputException ex, WebRequest request) {
+        final ApiError apiError = ApiError.builder()
+                .path(extractRequestUri(request))
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message("Invalid input")
+                .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .build();
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorWrapper(apiError));
+    }
+
     private String extractRequestUri(WebRequest w) {
         if (w instanceof ServletWebRequest servletWebRequest) {
             return servletWebRequest.getRequest().getRequestURI();

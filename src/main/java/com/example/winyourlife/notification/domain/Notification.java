@@ -28,6 +28,8 @@ public class Notification extends AbstractEntity {
     @Column(nullable = false)
     private boolean isRead;
 
+    private UUID notificationObjectUuid = null;
+
     @Builder
     public Notification(
             UUID uuid,
@@ -36,11 +38,13 @@ public class Notification extends AbstractEntity {
             Instant lastModifiedDate,
             NotificationType type,
             String emailRecipient,
-            String emailSender) {
+            String emailSender,
+            UUID notificationObjectUuid) {
         super(uuid, version, createdDate, lastModifiedDate);
         this.type = type;
         this.emailRecipient = emailRecipient;
         this.emailSender = emailSender;
         isRead = false;
+        this.notificationObjectUuid = notificationObjectUuid;
     }
 }

@@ -9,6 +9,7 @@ import com.example.winyourlife.userinfo.dto.*;
 import java.util.Base64;
 import lombok.val;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,7 @@ public record UserInfoService(
         UserInfoRepository userInfoRepository,
         UserInfoMapper userInfoMapper,
         JwtService jwtService,
-        UserService userService,
-        Authentication authentication)
+        UserService userService)
         implements com.example.winyourlife.userinfo.UserInfoService {
     @Override
     public void createUserInfo(UserInfoRequest userInfoRequest) {
@@ -28,6 +28,7 @@ public record UserInfoService(
 
     @Override
     public UserInfoResponse getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
         return userInfoRepository
                 .findByEmail(user.getUsername())
@@ -37,6 +38,7 @@ public record UserInfoService(
 
     @Override
     public UserInfoUpdateDataResponse updateUserInfoData(UserInfoUpdateDataRequest userInfoUpdateDataRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
         if (!user.getUsername().equals(userInfoUpdateDataRequest.email())
                 && userInfoRepository.existsByEmail(userInfoUpdateDataRequest.email())) {
