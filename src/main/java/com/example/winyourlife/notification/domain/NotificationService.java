@@ -31,6 +31,12 @@ record NotificationService(
         if (sender.getEmail().equals(friendRequest.emailRecipient())) {
             throw new BadInputException();
         }
+        // TODO: Implement check for existing friend request
+        //
+        //        if(notificationRepository.findByEmailSenderAndEmailRecipient(sender.getEmail(),
+        // friendRequest.emailRecipient()).isPresent() && ) {
+        //            throw new BadInputException();
+        //        }
 
         val recipient = userInfoService.getUserInfoByEmail(friendRequest.emailRecipient());
         val friendRequestObject = friendRequestRepository.save(
@@ -52,6 +58,12 @@ record NotificationService(
                 .findByUuid(friendRequestResponse.id())
                 .orElseThrow(ApplicationEntityNotFoundException::new);
 
+        val notificationObject = notificationRepository
+                .findByNotificationObjectUuid(friendRequest.getUuid())
+                .orElseThrow(ApplicationEntityNotFoundException::new);
+        notificationObject.setRead(true);
+        notificationRepository.save(notificationObject);
+
         userInfoService.addFriend(friendRequest.getSender(), friendRequest.getReceiver());
         val notification = Notification.builder()
                 .type(NotificationType.FRIEND_REQUEST_ACCEPTED)
@@ -69,12 +81,20 @@ record NotificationService(
         val friendRequest = friendRequestRepository
                 .findByUuid(friendRequestResponse.id())
                 .orElseThrow(ApplicationEntityNotFoundException::new);
+
+        val notificationObject = notificationRepository
+                .findByNotificationObjectUuid(friendRequest.getUuid())
+                .orElseThrow(ApplicationEntityNotFoundException::new);
+        notificationObject.setRead(true);
+        notificationRepository.save(notificationObject);
+
         val notification = Notification.builder()
                 .type(NotificationType.FRIEND_REQUEST_DECLINED)
                 .emailSender(user.getUsername())
                 .emailRecipient(friendRequest.getSender().getEmail())
                 .build();
         notificationRepository.save(notification);
+
         friendRequestRepository.delete(friendRequest);
     }
 
@@ -84,8 +104,7 @@ record NotificationService(
         val user = (UserDetails) authentication.getPrincipal();
         val notifications = notificationRepository.findAllByEmailRecipient(user.getUsername());
         val result = notifications.stream()
-                .filter(notification ->
-                        !notification.isRead() || notification.getType() == NotificationType.FRIEND_REQUEST)
+                .filter(notification -> !notification.isRead())
                 .map(notification -> NotificationResponse.builder()
                         .type(notification.getType().name())
                         .emailSender(notification.getEmailSender())
@@ -99,7 +118,12 @@ record NotificationService(
                         .time(instantToStringFormatter.format(notification.getCreatedDate()))
                         .build())
                 .toList();
-        notifications.forEach(notification -> notification.setRead(true));
+        notifications.stream()
+                .filter(notification -> notification.getType() != NotificationType.FRIEND_REQUEST)
+                .forEach(notification -> {
+                    notification.setRead(true);
+                    notificationRepository.save(notification);
+                });
         return result;
     }
 }

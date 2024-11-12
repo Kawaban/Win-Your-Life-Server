@@ -7,6 +7,7 @@ import com.example.winyourlife.jwt.JwtService;
 import com.example.winyourlife.jwt.dto.JwtUser;
 import com.example.winyourlife.userinfo.dto.*;
 import java.util.Base64;
+import java.util.List;
 import lombok.val;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,8 @@ public record UserInfoService(
         UserInfoRepository userInfoRepository,
         UserInfoMapper userInfoMapper,
         JwtService jwtService,
-        UserService userService)
+        UserService userService,
+        FriendMapper friendMapper)
         implements com.example.winyourlife.userinfo.UserInfoService {
     @Override
     public void createUserInfo(UserInfoRequest userInfoRequest) {
@@ -70,5 +72,16 @@ public record UserInfoService(
     @Override
     public UserInfo getUserInfoByEmail(String email) {
         return userInfoRepository.findByEmail(email).orElseThrow(ApplicationEntityNotFoundException::new);
+    }
+
+    @Override
+    public List<FriendResponse> getFriends() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+        val userInfo =
+                userInfoRepository.findByEmail(user.getUsername()).orElseThrow(ApplicationEntityNotFoundException::new);
+        return userInfo.getFriends().stream()
+                .map(friendMapper::userInfoToFriendResponse)
+                .toList();
     }
 }
