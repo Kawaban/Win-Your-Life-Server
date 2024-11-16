@@ -1,5 +1,6 @@
 package com.example.winyourlife.infrastructure.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -33,7 +34,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         final ApiError apiError = ApiError.builder()
                 .path(uri)
                 .statusCode(HttpStatus.FORBIDDEN.value())
-                .message(uri.equals("/login") ? "Wrong password or email" : ex.getMessage())
+                .message("Wrong password or email")
                 .status(HttpStatus.FORBIDDEN.getReasonPhrase())
                 .build();
         ex.printStackTrace();
@@ -69,10 +70,11 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(ApplicationEntityNotFoundException.class)
     public ResponseEntity<ApiErrorWrapper> handleEntityNotFound(
             ApplicationEntityNotFoundException ex, WebRequest request) {
+        final String uri = extractRequestUri(request);
         final ApiError apiError = ApiError.builder()
                 .path(extractRequestUri(request))
                 .statusCode(HttpStatus.NOT_FOUND.value())
-                .message("Entity not found")
+                .message(uri.equals("/api/auth/login") ? "Wrong password or email" : "Entity not found")
                 .status(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .build();
         ex.printStackTrace();
@@ -89,6 +91,18 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .build();
         ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorWrapper(apiError));
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ApiErrorWrapper> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+        final ApiError apiError = ApiError.builder()
+                .path(extractRequestUri(request))
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message("Token expired")
+                .status(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .build();
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorWrapper(apiError));
     }
 
     private String extractRequestUri(WebRequest w) {

@@ -31,12 +31,24 @@ record NotificationService(
         if (sender.getEmail().equals(friendRequest.emailRecipient())) {
             throw new BadInputException();
         }
-        // TODO: Implement check for existing friend request
-        //
-        //        if(notificationRepository.findByEmailSenderAndEmailRecipient(sender.getEmail(),
-        // friendRequest.emailRecipient()).isPresent() && ) {
-        //            throw new BadInputException();
-        //        }
+
+        // Check if there is already a friend request between the two users
+        val existingNotification = notificationRepository.findByEmailSenderAndEmailRecipientAndType(
+                sender.getEmail(), friendRequest.emailRecipient(), NotificationType.FRIEND_REQUEST);
+        val existingNotificationReverse = notificationRepository.findByEmailSenderAndEmailRecipientAndType(
+                friendRequest.emailRecipient(), sender.getEmail(), NotificationType.FRIEND_REQUEST);
+
+        if (existingNotification.isPresent()) {
+            if (!existingNotification.get().isRead()) {
+                throw new BadInputException();
+            }
+        }
+
+        if (existingNotificationReverse.isPresent()) {
+            if (!existingNotificationReverse.get().isRead()) {
+                throw new BadInputException();
+            }
+        }
 
         val recipient = userInfoService.getUserInfoByEmail(friendRequest.emailRecipient());
         val friendRequestObject = friendRequestRepository.save(

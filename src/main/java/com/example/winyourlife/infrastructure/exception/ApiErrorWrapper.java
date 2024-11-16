@@ -9,6 +9,6 @@ import lombok.Getter;
 @Data
 @Getter
 public class ApiErrorWrapper {
-    @JsonProperty("Error")
+    @JsonProperty("error")
     private ApiError errorBody;
 }

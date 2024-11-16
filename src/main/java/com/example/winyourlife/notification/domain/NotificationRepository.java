@@ -12,5 +12,6 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
 
     Optional<Notification> findByNotificationObjectUuid(UUID notificationObjectUuid);
 
-    Optional<Notification> findByEmailSenderAndEmailRecipient(String emailSender, String emailRecipient);
+    Optional<Notification> findByEmailSenderAndEmailRecipientAndType(
+            String emailSender, String emailRecipient, NotificationType type);
 }
