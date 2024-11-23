@@ -99,3 +99,21 @@ CREATE
             FOREIGN KEY(friend_id) REFERENCES winyourlife.users_info(uuid),
             PRIMARY KEY(uuid)
         );
+
+DROP
+    TABLE
+        IF EXISTS winyourlife.tasks;
+
+CREATE
+    TABLE
+        winyourlife.tasks(
+            created_date TIMESTAMP(6) WITH TIME ZONE DEFAULT NOW(),
+            last_modified_date TIMESTAMP(6) WITH TIME ZONE DEFAULT NOW(),
+            version BIGINT NOT NULL DEFAULT 0,
+            uuid UUID NOT NULL DEFAULT uuid_generate_v4(),
+            user_id UUID NOT NULL,
+            task_name VARCHAR(255) NOT NULL,
+            task_image bytea,
+            PRIMARY KEY(uuid),
+            FOREIGN KEY(user_id) REFERENCES winyourlife.users_info(uuid)
+        );
