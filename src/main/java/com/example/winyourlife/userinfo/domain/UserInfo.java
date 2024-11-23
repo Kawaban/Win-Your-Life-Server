@@ -24,9 +24,17 @@ public class UserInfo extends AbstractEntity {
     @Column(columnDefinition = "bytea")
     private byte[] avatar;
 
+    @Column(nullable = false)
     private int streak;
+
+    @Column(nullable = false)
     private int longestStreak;
+
+    @Column(nullable = false)
     private int completedTasks;
+
+    @Column(nullable = false)
+    private int wonDays;
 
     @Email
     @Column(nullable = false, unique = true)
@@ -49,7 +57,8 @@ public class UserInfo extends AbstractEntity {
             String email,
             int streak,
             int longestStreak,
-            int completedTasks) {
+            int completedTasks,
+            int wonDays) {
         super(uuid, version, createdDate, lastModifiedDate);
         this.name = name;
         this.email = email;
@@ -57,5 +66,6 @@ public class UserInfo extends AbstractEntity {
         this.streak = streak;
         this.longestStreak = longestStreak;
         this.completedTasks = completedTasks;
+        this.wonDays = wonDays;
     }
 }

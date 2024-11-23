@@ -76,7 +76,8 @@ INSERT
             streak,
             longest_streak,
             completed_tasks,
-            avatar
+            avatar,
+            won_days
         )
     VALUES(
         NOW(),
@@ -88,7 +89,8 @@ INSERT
         5,
         10,
         50,
-        E'\\x'
+        E'\\x',
+        15
     ),
     (
         NOW(),
@@ -100,7 +102,8 @@ INSERT
         3,
         5,
         30,
-        E'\\x'
+        E'\\x',
+        15
     ),
     (
         NOW(),
@@ -112,7 +115,8 @@ INSERT
         7,
         12,
         70,
-        E'\\x'
+        E'\\x',
+        15
     ),
     (
         NOW(),
@@ -124,7 +128,8 @@ INSERT
         2,
         4,
         15,
-        E'\\x'
+        E'\\x',
+        15
     ),
     (
         NOW(),
@@ -136,5 +141,6 @@ INSERT
         6,
         9,
         60,
-        E'\\x'
+        E'\\x',
+        15
     );

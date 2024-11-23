@@ -38,9 +38,10 @@ CREATE
             uuid UUID NOT NULL,
             email VARCHAR(255) UNIQUE NOT NULL,
             name VARCHAR(255) NOT NULL,
-            streak INT,
-            longest_streak INT,
-            completed_tasks INT,
+            streak INT NOT NULL,
+            longest_streak INT NOT NULL,
+            completed_tasks INT NOT NULL,
+            won_days INT NOT NULL,
             avatar bytea,
             PRIMARY KEY(uuid)
         );
@@ -111,9 +112,9 @@ CREATE
             last_modified_date TIMESTAMP(6) WITH TIME ZONE DEFAULT NOW(),
             version BIGINT NOT NULL DEFAULT 0,
             uuid UUID NOT NULL DEFAULT uuid_generate_v4(),
-            user_id UUID NOT NULL,
+            user_uuid UUID NOT NULL,
             task_name VARCHAR(255) NOT NULL,
             task_image bytea,
             PRIMARY KEY(uuid),
-            FOREIGN KEY(user_id) REFERENCES winyourlife.users_info(uuid)
+            FOREIGN KEY(user_uuid) REFERENCES winyourlife.users_info(uuid)
         );
