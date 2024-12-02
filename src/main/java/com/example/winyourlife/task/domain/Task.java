@@ -29,11 +29,14 @@ public class Task extends AbstractEntity {
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     private UserInfo user;
 
-    //    @Column(nullable = false)
-    //    private boolean isCompleted;
-    //
-    //    @Column(nullable = false)
-    //    private boolean isActive;
+    @Column(nullable = false)
+    private boolean isCompleted;
+
+    @Column(nullable = false)
+    private boolean isActive;
+
+    @Column
+    private boolean isPrepared;
 
     @Builder
     public Task(
@@ -48,7 +51,8 @@ public class Task extends AbstractEntity {
         this.taskName = taskName;
         this.taskImage = taskImage;
         this.user = user;
-        //        this.isActive = false;
-        //        this.isCompleted = false;
+        this.isActive = false;
+        this.isCompleted = false;
+        this.isPrepared = false;
     }
 }

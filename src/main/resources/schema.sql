@@ -115,6 +115,9 @@ CREATE
             user_uuid UUID NOT NULL,
             task_name VARCHAR(255) NOT NULL,
             task_image bytea,
+            is_completed BOOLEAN DEFAULT FALSE NOT NULL,
+            is_active BOOLEAN DEFAULT FALSE NOT NULL,
+            is_prepared BOOLEAN DEFAULT FALSE NOT NULL,
             PRIMARY KEY(uuid),
             FOREIGN KEY(user_uuid) REFERENCES winyourlife.users_info(uuid)
         );

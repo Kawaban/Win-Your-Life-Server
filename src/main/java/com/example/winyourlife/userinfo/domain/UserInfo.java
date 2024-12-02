@@ -1,6 +1,7 @@
 package com.example.winyourlife.userinfo.domain;
 
 import com.example.winyourlife.infrastructure.model.AbstractEntity;
+import com.example.winyourlife.task.domain.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import java.time.Instant;
@@ -46,6 +47,9 @@ public class UserInfo extends AbstractEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<UserInfo> friends;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Task> tasks;
 
     @Builder
     public UserInfo(

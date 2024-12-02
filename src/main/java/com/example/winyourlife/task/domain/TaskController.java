@@ -1,7 +1,6 @@
 package com.example.winyourlife.task.domain;
 
-import com.example.winyourlife.task.dto.CreateTaskRequest;
-import com.example.winyourlife.task.dto.TaskResponse;
+import com.example.winyourlife.task.dto.*;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,5 +16,25 @@ public record TaskController(TaskService taskService) {
     @GetMapping
     List<TaskResponse> getTasks() {
         return taskService.getTasks();
+    }
+
+    @PutMapping
+    void updateTask(@RequestBody TaskUpdate taskUpdate) {
+        taskService.updateTask(taskUpdate);
+    }
+
+    @DeleteMapping
+    void deleteTask(@RequestBody TaskDelete taskDelete) {
+        taskService.deleteTask(taskDelete);
+    }
+
+    @PatchMapping("/completion")
+    void completeTasks(@RequestBody List<TaskCompletion> taskCompletion) {
+        taskService.completeTasks(taskCompletion);
+    }
+
+    @PatchMapping("/preparation")
+    void prepareTasks(@RequestBody TaskPreparation taskPreparation) {
+        taskService.prepareTasks(taskPreparation);
     }
 }

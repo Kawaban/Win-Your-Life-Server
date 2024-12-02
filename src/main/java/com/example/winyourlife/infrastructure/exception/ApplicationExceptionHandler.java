@@ -105,6 +105,19 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorWrapper(apiError));
     }
 
+    @ExceptionHandler(TaskAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorWrapper> handleTaskAlreadyExistsException(
+            TaskAlreadyExistsException ex, WebRequest request) {
+        final ApiError apiError = ApiError.builder()
+                .path(extractRequestUri(request))
+                .statusCode(HttpStatus.CONFLICT.value())
+                .message("Task already exists")
+                .status(HttpStatus.CONFLICT.getReasonPhrase())
+                .build();
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiErrorWrapper(apiError));
+    }
+
     private String extractRequestUri(WebRequest w) {
         if (w instanceof ServletWebRequest servletWebRequest) {
             return servletWebRequest.getRequest().getRequestURI();

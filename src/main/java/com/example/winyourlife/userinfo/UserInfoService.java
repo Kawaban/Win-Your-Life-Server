@@ -16,4 +16,12 @@ public interface UserInfoService {
     UserInfo getUserInfoByEmail(String email);
 
     List<FriendResponse> getFriends();
+
+    void deleteFriend(DeleteFriendRequest deleteFriendRequest);
+
+    void wonDay(UserInfo userInfo);
+
+    void lostDay(UserInfo userInfo);
+
+    List<UserInfo> getAllUsers();
 }

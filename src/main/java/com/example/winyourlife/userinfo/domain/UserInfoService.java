@@ -84,4 +84,51 @@ public record UserInfoService(
                 .map(friendMapper::userInfoToFriendResponse)
                 .toList();
     }
+
+    @Override
+    public void deleteFriend(DeleteFriendRequest deleteFriendRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+
+        val userInfo =
+                userInfoRepository.findByEmail(user.getUsername()).orElseThrow(ApplicationEntityNotFoundException::new);
+
+        val friendInfo = userInfoRepository
+                .findByEmail(deleteFriendRequest.email())
+                .orElseThrow(ApplicationEntityNotFoundException::new);
+
+        userInfo.getFriends().remove(friendInfo);
+        friendInfo.getFriends().remove(userInfo);
+
+        userInfoRepository.save(userInfo);
+        userInfoRepository.save(friendInfo);
+    }
+
+    @Override
+    public void wonDay(UserInfo userInfo) {
+        userInfo.setStreak(userInfo.getStreak() + 1);
+        userInfo.setLongestStreak(Math.max(userInfo.getStreak(), userInfo.getLongestStreak()));
+        userInfo.setWonDays(userInfo.getWonDays() + 1);
+
+        userInfo.setCompletedTasks(userInfo.getCompletedTasks()
+                + (int) userInfo.getTasks().stream()
+                        .filter(t -> t.isActive() && t.isCompleted())
+                        .count());
+        userInfoRepository.save(userInfo);
+    }
+
+    @Override
+    public void lostDay(UserInfo userInfo) {
+        userInfo.setStreak(0);
+        userInfo.setCompletedTasks(userInfo.getCompletedTasks()
+                + (int) userInfo.getTasks().stream()
+                        .filter(t -> t.isActive() && t.isCompleted())
+                        .count());
+        userInfoRepository.save(userInfo);
+    }
+
+    @Override
+    public List<UserInfo> getAllUsers() {
+        return userInfoRepository.findAll();
+    }
 }
