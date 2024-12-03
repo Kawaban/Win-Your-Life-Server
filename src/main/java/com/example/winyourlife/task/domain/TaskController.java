@@ -18,6 +18,16 @@ public record TaskController(TaskService taskService) {
         return taskService.getTasks();
     }
 
+    @GetMapping("/preparation")
+    List<TaskResponse> getPreparedTasks() {
+        return taskService.getPreparedTasks();
+    }
+
+    @GetMapping("/active")
+    List<TaskResponse> getActiveTasks() {
+        return taskService.getActiveTasks();
+    }
+
     @PutMapping
     void updateTask(@RequestBody TaskUpdate taskUpdate) {
         taskService.updateTask(taskUpdate);

@@ -18,4 +18,8 @@ public interface TaskService {
     void prepareTasks(TaskPreparation taskPreparation);
 
     void scheduledEndOfDay(UserInfo userInfo);
+
+    List<TaskResponse> getPreparedTasks();
+
+    List<TaskResponse> getActiveTasks();
 }

@@ -121,4 +121,26 @@ public record TaskService(TaskRepository taskRepository, UserInfoService userInf
             taskRepository.save(t);
         });
     }
+
+    @Override
+    public List<TaskResponse> getPreparedTasks() {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+        val userInfo = userInfoService.getUserInfoByEmail(user.getUsername());
+        return userInfo.getTasks().stream()
+                .filter(Task::isPrepared)
+                .map(taskMapper::toTaskResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TaskResponse> getActiveTasks() {
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
+        val user = (UserDetails) authentication.getPrincipal();
+        val userInfo = userInfoService.getUserInfoByEmail(user.getUsername());
+        return userInfo.getTasks().stream()
+                .filter(Task::isActive)
+                .map(taskMapper::toTaskResponse)
+                .toList();
+    }
 }
