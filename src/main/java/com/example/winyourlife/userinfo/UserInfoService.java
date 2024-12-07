@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserInfoService {
     void createUserInfo(UserInfoRequest userInfoRequest);
 
-    UserInfoResponse getUserInfo();
+    UserInfoResponse getUserInfoWithOutTasks();
 
     UserInfoUpdateDataResponse updateUserInfoData(UserInfoUpdateDataRequest userInfoUpdateDataRequest);
 

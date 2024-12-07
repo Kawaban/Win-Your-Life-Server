@@ -29,7 +29,7 @@ public record UserInfoService(
     }
 
     @Override
-    public UserInfoResponse getUserInfo() {
+    public UserInfoResponse getUserInfoWithOutTasks() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
         return userInfoRepository

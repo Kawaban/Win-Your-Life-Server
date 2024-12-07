@@ -83,7 +83,7 @@ INSERT
         NOW(),
         NOW(),
         0,
-        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
         'user1@example.com',
         'User One',
         5,
@@ -143,4 +143,115 @@ INSERT
         60,
         E'\\x',
         15
+    );
+
+INSERT
+    INTO
+        winyourlife.tasks(
+            created_date,
+            last_modified_date,
+            version,
+            uuid,
+            user_uuid,
+            task_name,
+            task_image,
+            is_completed,
+            is_active,
+            is_prepared
+        )
+    VALUES(
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 1',
+        E'\\x',
+        FALSE,
+        FALSE,
+        FALSE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 2',
+        E'\\x',
+        FALSE,
+        FALSE,
+        FALSE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 3',
+        E'\\x',
+        FALSE,
+        FALSE,
+        FALSE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 4',
+        E'\\x',
+        FALSE,
+        FALSE,
+        TRUE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 5',
+        E'\\x',
+        FALSE,
+        FALSE,
+        TRUE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 6',
+        E'\\x',
+        TRUE,
+        TRUE,
+        FALSE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 7',
+        E'\\x',
+        FALSE,
+        TRUE,
+        TRUE
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        'Task 8',
+        E'\\x',
+        FALSE,
+        TRUE,
+        TRUE
     );

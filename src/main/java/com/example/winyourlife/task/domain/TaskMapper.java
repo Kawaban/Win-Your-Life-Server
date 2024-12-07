@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
     @Mapping(target = "taskImage", source = "taskImage", qualifiedByName = "encodeImage")
+    @Mapping(target = "isCompleted", source = "completed")
     TaskResponse toTaskResponse(Task task);
 
     @Mapping(target = "taskImage", source = "taskImage", qualifiedByName = "decodeImage")

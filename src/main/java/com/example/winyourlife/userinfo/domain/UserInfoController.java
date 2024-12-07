@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-public record UserInfoController(UserInfoService userInfoService) {
+public record UserInfoController(UserInfoService userInfoService, UserInfoResponseService userInfoResponseService) {
 
     @GetMapping
     UserInfoResponse getUserInfo() {
-        return userInfoService.getUserInfo();
+        return userInfoResponseService.getUserInfoWithTasks();
     }
 
     @PatchMapping("/data")

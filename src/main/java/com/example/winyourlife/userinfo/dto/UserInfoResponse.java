@@ -1,5 +1,8 @@
 package com.example.winyourlife.userinfo.dto;
 
+import com.example.winyourlife.task.dto.TaskResponse;
+import java.util.List;
+
 public record UserInfoResponse(
         String email,
         String name,
@@ -8,4 +11,7 @@ public record UserInfoResponse(
         int longestStreak,
         int completedTasks,
         int wonDays,
-        int daysIn) {}
+        int daysIn,
+        List<TaskResponse> allTasks,
+        List<TaskResponse> preparedTasks,
+        List<TaskResponse> activeTasks) {}
