@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public record EndOfDayScheduler(TaskService taskService, UserInfoService userInfoService) {
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 25 23 * * *")
     public void endOfDay() {
         userInfoService.getAllUsers().forEach(taskService::scheduledEndOfDay);
     }

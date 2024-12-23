@@ -48,7 +48,7 @@ public class UserInfo extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private List<UserInfo> friends;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Task> tasks;
 
     @Builder

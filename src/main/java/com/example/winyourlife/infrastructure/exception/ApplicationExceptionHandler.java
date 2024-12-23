@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -112,6 +113,19 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .path(extractRequestUri(request))
                 .statusCode(HttpStatus.CONFLICT.value())
                 .message("Task already exists")
+                .status(HttpStatus.CONFLICT.getReasonPhrase())
+                .build();
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiErrorWrapper(apiError));
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ApiErrorWrapper> handleOptimisticLockingFailureException(
+            ObjectOptimisticLockingFailureException ex, WebRequest request) {
+        final ApiError apiError = ApiError.builder()
+                .path(extractRequestUri(request))
+                .statusCode(HttpStatus.CONFLICT.value())
+                .message("Entity was modified by another user")
                 .status(HttpStatus.CONFLICT.getReasonPhrase())
                 .build();
         ex.printStackTrace();
