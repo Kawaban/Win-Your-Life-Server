@@ -58,7 +58,7 @@ INSERT
         NOW(),
         0,
         uuid_generate_v4(),
-        'user5@example.com',
+        'molrib1939@gmail.com',
         '$2a$12$LdZFfuccCDIwzNqn3jLg3.Z8Aw6g6bePh9W4Z8ipsSJvLSRp6H6FO',
         TRUE,
         'USER'
@@ -136,7 +136,7 @@ INSERT
         NOW(),
         0,
         uuid_generate_v4(),
-        'user5@example.com',
+        'molrib1939@gmail.com',
         'User Five',
         6,
         9,

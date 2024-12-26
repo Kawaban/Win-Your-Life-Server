@@ -121,3 +121,21 @@ CREATE
             PRIMARY KEY(uuid),
             FOREIGN KEY(user_uuid) REFERENCES winyourlife.users_info(uuid)
         );
+
+DROP
+    TABLE
+        IF EXISTS winyourlife.password_reset_tokens;
+
+CREATE
+    TABLE
+        winyourlife.password_reset_tokens(
+            created_date TIMESTAMP(6) WITH TIME ZONE DEFAULT NOW(),
+            last_modified_date TIMESTAMP(6) WITH TIME ZONE DEFAULT NOW(),
+            version BIGINT NOT NULL DEFAULT 0,
+            uuid UUID NOT NULL DEFAULT uuid_generate_v4(),
+            user_uuid UUID NOT NULL,
+            token VARCHAR(255) NOT NULL,
+            expiration_date TIMESTAMP(6) WITH TIME ZONE NOT NULL,
+            is_used BOOLEAN DEFAULT FALSE NOT NULL,
+            PRIMARY KEY(uuid)
+        );

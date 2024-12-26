@@ -3,6 +3,7 @@ package com.example.winyourlife.authentication.user.domain;
 import com.example.winyourlife.authentication.user.dto.UserRequest;
 import com.example.winyourlife.infrastructure.exception.ApplicationEntityNotFoundException;
 import com.example.winyourlife.infrastructure.exception.UserAlreadyExistsException;
+import java.util.UUID;
 import lombok.val;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,20 @@ record UserService(UserRepository userRepository, UserMapper userMapper)
         val user = userRepository.findByEmail(oldEmail).orElseThrow(ApplicationEntityNotFoundException::new);
         user.setEmail(newEmail);
         userRepository.save(user);
+    }
+
+    @Override
+    public void updatePassword(UUID userId, String password) {
+        val user = userRepository.findById(userId).orElseThrow(ApplicationEntityNotFoundException::new);
+        user.setPassword(password.toCharArray());
+        userRepository.save(user);
+    }
+
+    @Override
+    public UUID findUserIdByEmail(String email) {
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(ApplicationEntityNotFoundException::new)
+                .getUuid();
     }
 }

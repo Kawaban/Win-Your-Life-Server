@@ -132,6 +132,19 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiErrorWrapper(apiError));
     }
 
+    @ExceptionHandler(PasswordResetTokenExpiredException.class)
+    public ResponseEntity<ApiErrorWrapper> handlePasswordResetTokenExpiredException(
+            PasswordResetTokenExpiredException ex, WebRequest request) {
+        final ApiError apiError = ApiError.builder()
+                .path(extractRequestUri(request))
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message("Password reset token expired")
+                .status(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .build();
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiErrorWrapper(apiError));
+    }
+
     private String extractRequestUri(WebRequest w) {
         if (w instanceof ServletWebRequest servletWebRequest) {
             return servletWebRequest.getRequest().getRequestURI();
