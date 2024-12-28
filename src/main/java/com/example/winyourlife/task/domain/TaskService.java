@@ -44,24 +44,24 @@ public record TaskService(TaskRepository taskRepository, UserInfoService userInf
         val authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
         val userInfo = userInfoService.getUserInfoByEmail(user.getUsername());
-
         val task = userInfo.getTasks().stream()
-                .filter(t -> t.getTaskName().equals(taskUpdate.taskName()))
+                .filter(t -> t.getTaskName().equals(taskUpdate.taskOldName()))
                 .findFirst()
                 .orElseThrow(ApplicationEntityNotFoundException::new);
 
         task.setTaskImage(Base64.getDecoder().decode(taskUpdate.taskImage()));
+        task.setTaskName(taskUpdate.taskNewName());
         taskRepository.save(task);
     }
 
     @Override
-    public void deleteTask(TaskDelete taskDelete) {
+    public void deleteTask(String taskName) {
         val authentication = SecurityContextHolder.getContext().getAuthentication();
         val user = (UserDetails) authentication.getPrincipal();
         val userInfo = userInfoService.getUserInfoByEmail(user.getUsername());
 
         val task = userInfo.getTasks().stream()
-                .filter(t -> t.getTaskName().equals(taskDelete.taskName()))
+                .filter(t -> t.getTaskName().equals(taskName))
                 .findFirst()
                 .orElseThrow(ApplicationEntityNotFoundException::new);
 

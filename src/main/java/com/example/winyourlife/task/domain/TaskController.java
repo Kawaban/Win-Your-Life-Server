@@ -33,9 +33,9 @@ public record TaskController(TaskService taskService) {
         taskService.updateTask(taskUpdate);
     }
 
-    @DeleteMapping
-    void deleteTask(@RequestBody TaskDelete taskDelete) {
-        taskService.deleteTask(taskDelete);
+    @DeleteMapping("/{taskName}")
+    void deleteTask(@PathVariable String taskName) {
+        taskService.deleteTask(taskName);
     }
 
     @PatchMapping("/completion")

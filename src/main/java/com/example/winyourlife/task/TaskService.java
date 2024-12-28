@@ -11,7 +11,7 @@ public interface TaskService {
 
     void updateTask(TaskUpdate taskUpdate);
 
-    void deleteTask(TaskDelete taskDelete);
+    void deleteTask(String taskName);
 
     void completeTasks(List<TaskCompletion> taskCompletion);
 

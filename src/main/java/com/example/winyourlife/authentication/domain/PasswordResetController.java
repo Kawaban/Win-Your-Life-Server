@@ -11,9 +11,4 @@ record PasswordResetController(PasswordResetService passwordResetService) {
     public void remindPassword(@PathVariable String email) throws MessagingException {
         passwordResetService.createPasswordResetToken(email);
     }
-
-    //    @PostMapping("/reset-password")
-    //    public void savePassword(@RequestBody PasswordResetRequest request) {
-    //        passwordResetService.resetPassword(request);
-    //    }
 }
