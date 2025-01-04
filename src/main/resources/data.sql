@@ -96,7 +96,7 @@ INSERT
         NOW(),
         NOW(),
         0,
-        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174011',
         'user2@example.com',
         'User Two',
         3,
@@ -109,7 +109,7 @@ INSERT
         NOW(),
         NOW(),
         0,
-        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174012',
         'user3@example.com',
         'User Three',
         7,
@@ -122,7 +122,7 @@ INSERT
         NOW(),
         NOW(),
         0,
-        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174013',
         'user4@example.com',
         'User Four',
         2,
@@ -135,7 +135,7 @@ INSERT
         NOW(),
         NOW(),
         0,
-        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174014',
         'molrib1939@gmail.com',
         'User Five',
         6,
@@ -255,3 +255,75 @@ INSERT
         TRUE,
         TRUE
     );
+
+INSERT
+    INTO
+        winyourlife.friends(
+            created_date,
+            last_modified_date,
+            version,
+            uuid,
+            user_id,
+            friend_id
+        )
+    VALUES(
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174010',
+        '123e4567-e89b-12d3-a456-426614174011'
+    ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174011',
+        '123e4567-e89b-12d3-a456-426614174010'
+    ), -- Bidirectional(
+    NOW(),
+    NOW(),
+    0,
+    uuid_generate_v4(),
+    '123e4567-e89b-12d3-a456-426614174010',
+    '123e4567-e89b-12d3-a456-426614174012' ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174012',
+        '123e4567-e89b-12d3-a456-426614174010'
+    ), -- Bidirectional(
+    NOW(),
+    NOW(),
+    0,
+    uuid_generate_v4(),
+    '123e4567-e89b-12d3-a456-426614174011',
+    '123e4567-e89b-12d3-a456-426614174013' ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174013',
+        '123e4567-e89b-12d3-a456-426614174011'
+    ), -- Bidirectional(
+    NOW(),
+    NOW(),
+    0,
+    uuid_generate_v4(),
+    '123e4567-e89b-12d3-a456-426614174013',
+    '123e4567-e89b-12d3-a456-426614174014' ),
+    (
+        NOW(),
+        NOW(),
+        0,
+        uuid_generate_v4(),
+        '123e4567-e89b-12d3-a456-426614174014',
+        '123e4567-e89b-12d3-a456-426614174013'
+    );
+
+-- Bidirectional
+

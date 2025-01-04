@@ -24,8 +24,8 @@ public record UserInfoController(UserInfoService userInfoService, UserInfoRespon
         return userInfoService.getFriends();
     }
 
-    @DeleteMapping("/friends")
-    void deleteFriend(@RequestBody DeleteFriendRequest deleteFriendRequest) {
-        userInfoService.deleteFriend(deleteFriendRequest);
+    @DeleteMapping("/friends/{email}")
+    void deleteFriend(@PathVariable String email) {
+        userInfoService.deleteFriend(new DeleteFriendRequest(email));
     }
 }
