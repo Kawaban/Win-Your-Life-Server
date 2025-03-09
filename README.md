@@ -26,8 +26,8 @@ The backend server is responsible for implementing the following features:
 6. **Language Versions**:
    - Endpoints for handling language preferences (Polish and English).
 
-7. **AI Voiceover Integration**:
-   - Support for Andrew Tate’s AI voice model to motivate users.
+7. **JWT Authentication**:
+   - Ensures that only authenticated users can access secure endpoints.
 
 ---
 
@@ -36,7 +36,7 @@ The backend server is responsible for implementing the following features:
 
 ### **Technologies**
 - **Language** Java 21
-- **Backend Framework**: Spring Boot.
+- **Backend Framework**: Spring Boot 3.
 - **Database**: PostgreSQL.
 
 ---
